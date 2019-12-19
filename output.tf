@@ -11,10 +11,30 @@ output "key_name" {
     value = aws_key_pair.deployer.key_name
 }
 
-output "username" {
+
+
+output "wordpress" {
+    value = aws_route53_record.www.name
+}
+output "wordpress_username" {
     value = "some_username"
 }
 
-output "password" {
+output "wordpress_password" {
     value = "password"
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
