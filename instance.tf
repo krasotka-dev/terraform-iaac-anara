@@ -8,6 +8,6 @@ resource "aws_instance" "web" {
   user_data = file("userdata_file")
 
   tags = {
-    Name = "HelloWorld"
+    Name = "HelloWorld".count.index
   }
 }
