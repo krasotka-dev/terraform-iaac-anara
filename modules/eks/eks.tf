@@ -1,8 +1,8 @@
 module "my-cluster" {
   source       = "terraform-aws-modules/eks/aws"
   cluster_name = "dev"
-  subnets      = ["subnet-e3a93a85", "subnet-3425477c", "subnet-104d904a"]
-  vpc_id       = "vpc-908caaf6"
+  subnets      = ["subnet-c74d1e8d", "subnet-e4820eb8", "subnet-1fe46778"]
+  vpc_id       = "vpc-1471ad6e"
   cluster_version = "1.14"
 
   worker_groups = [
