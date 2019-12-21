@@ -1,37 +1,7 @@
 data "aws_availability_zones" "available" {}
 
 locals {
-  # Can't use full domain names so we will use just the environment name?
-  # Name can't have dots so replacing them to -
-
-  # This limits var.base_domain to 20 chars, because if length of our cluster_name is longer than 32 chars
-  # terraform will throw errors
-  #cluster_name = "${var.environment}-${format("%.20s", replace(var.base_domain, ".", "-"))}"
-
-  # Let's use environment name and random 8 char string for cluster name, this is more prune then above example
-
-  # cluster_name = "${var.environment}-${random_string.suffix.result}"
   cluster_name = "${var.environment}"
-
-  # the commented out worker group list below shows an example of how to define
-  # multiple worker groups of differing configurations
-  # worker_groups = "${list(
-  #                   map("asg_desired_capacity", "${var.worker_asg_min_size}",
-  #                       "asg_max_size", "${var.worker_asg_max_size}",
-  #                       "asg_min_size", "${var.worker_asg_min_size}",
-  #                       "instance_type", "${var.worker_instance_type}",
-  #                       "name", "worker_group_a",
-  #                       "subnets", "${join(",", module.vpc.private_subnets)}",
-  #                   ),
-  #                   map("asg_desired_capacity", "1",
-  #                       "asg_max_size", "5",
-  #                       "asg_min_size", "1",
-  #                       "instance_type", "m4.2xlarge",
-  #                       "name", "worker_group_b",
-  #                       "subnets", "${join(",", module.vpc.private_subnets)}",
-  #                   ),
-  # )}"
-
   worker_groups = "${list(
                   map("instance_type","${var.worker_instance_type}",
                       "asg_desired_capacity", "${var.worker_asg_min_size}",
