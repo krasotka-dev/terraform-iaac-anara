@@ -101,7 +101,7 @@ resource "aws_security_group_rule" "allow_cidr_ingress" {
 resource "aws_security_group_rule" "allow_mgmt_ingress" {
   description              = "Allow ssh communication with the EKS workers."
   protocol                 = "tcp"
-  security_group_id        = aws_security_group.workers.id
+  security_group_id        = aws_security_group.workers[count.index].id
   source_security_group_id = var.ssh_sg
   from_port                = 22
   to_port                  = 22
