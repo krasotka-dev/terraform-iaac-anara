@@ -52,20 +52,20 @@ resource "aws_security_group_rule" "cluster_https_cidr_ingress" {
   from_port         = 443
   to_port           = 443
   type              = "ingress"
-  count             = "${var.cluster_security_group_id == "" ? 1 : 0}"
+  count             = var.cluster_security_group_id == "" ? 1 : 0
 }
 
 resource "aws_iam_role" "cluster" {
-  name_prefix        = "${var.cluster_name}"
-  assume_role_policy = "${data.aws_iam_policy_document.cluster_assume_role_policy.json}"
+  name_prefix        = var.cluster_name
+  assume_role_policy = data.aws_iam_policy_document.cluster_assume_role_policy.json
 }
 
 resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = "${aws_iam_role.cluster.name}"
+  role       = aws_iam_role.cluster.name
 }
 
 resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSServicePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
-  role       = "${aws_iam_role.cluster.name}"
+  role       = aws_iam_role.cluster.name
 }
