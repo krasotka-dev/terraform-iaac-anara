@@ -16,7 +16,7 @@ resource "aws_instance" "web" {
         "sudo yum install -y epel-release",
         "sudo yum install httpd -y ",
         "systemctl start httpd",
-      ]
+        ]
       }
   lifecycle{
     prevent_destroy = false
