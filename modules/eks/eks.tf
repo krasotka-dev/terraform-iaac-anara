@@ -6,8 +6,7 @@ module "my-cluster" {
   cluster_version = "1.14"
   cluster_security_group_id = "sg-054b7c5cb1ea0752b"
 
-  worker_groups = [
-    {
+  worker_groups = [{
       instance_type = "m4.large"
       asg_max_size  = 15
       asg_min_size  = 3
