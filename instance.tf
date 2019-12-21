@@ -5,11 +5,6 @@ resource "aws_instance" "web" {
   key_name = aws_key_pair.deployer.key_name
   security_groups = ["allow_ssh"]
   user_data = file("userdata_file")
-
-  lifecycle{
-    prevent_destroy = false
-  }
-
   tags = {
     Name = "HelloWorld"
   }
