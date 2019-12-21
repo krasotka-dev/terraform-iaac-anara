@@ -5,6 +5,7 @@ module "my-cluster" {
   vpc_id                    = "vpc-1471ad6e"
   cluster_version           = "1.14"
   cluster_security_group_id = "sg-0baae22921460195f"
+  manage_aws_auth           = true
 
   worker_groups = [{
     instance_type        = "m4.large"
