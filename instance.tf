@@ -6,7 +6,18 @@ resource "aws_instance" "web" {
   key_name = aws_key_pair.deployer.key_name
   security_groups = ["allow_ssh"]
   user_data = file("userdata_file")
-  tags = {
-    Name = "HelloWorld${count_index +1}"
+
+  lifecycle{
+    prevent_destroy = false
   }
+
+  tags = {
+    Name = "HelloWorld${count.index +1}"
+  }
+}
+
+resource "aws_instance" "imported" {
+  ami             = "ami-00068cd7555f543d5"
+  key_name        = aws_key_pair.deployer.key_name
+  security_groups = ["allow_ssh"]
 }
