@@ -23,7 +23,7 @@ resource "random_string" "suffix" {
 }
 
 module "eks" {
-  source                                       = "modules/eks"
+  source                                       = "./modules/eks"
   cluster_name                                 = "${local.cluster_name}"
   cluster_version                              = "${var.kubernetes_version}"
   subnets                                      = ["${var.worker_subnet_ids}"]

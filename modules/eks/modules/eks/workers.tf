@@ -101,12 +101,12 @@ resource "aws_security_group_rule" "allow_cidr_ingress" {
 resource "aws_security_group_rule" "allow_mgmt_ingress" {
   description              = "Allow ssh communication with the EKS workers."
   protocol                 = "tcp"
-  security_group_id        = "${aws_security_group.workers.id}"
-  source_security_group_id = "${var.ssh_sg}"
+  security_group_id        = aws_security_group.workers.id
+  source_security_group_id = var.ssh_sg
   from_port                = 22
   to_port                  = 22
   type                     = "ingress"
-  count                    = "${var.cluster_security_group_id == "" ? 1 : 0}"
+  count                    = var.cluster_security_group_id == "" ? 1 : 0
 }
 
 resource "aws_iam_role" "workers" {
@@ -163,9 +163,7 @@ data "aws_iam_policy_document" "allow_roles" {
       "sts:AssumeRole",
     ]
 
-    resources = [
-      "${var.allow_roles}",
-    ]
+    resources = var.allow_roles
   }
 }
 

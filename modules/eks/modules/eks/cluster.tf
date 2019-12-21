@@ -4,8 +4,8 @@ resource "aws_eks_cluster" "this" {
   version  = "${var.cluster_version}"
 
   vpc_config {
-    security_group_ids = ["${local.cluster_security_group_id}"]
-    subnet_ids         = ["${var.subnets}"]
+    security_group_ids = [local.cluster_security_group_id]
+    subnet_ids         =  var.subnets
   }
 
   depends_on = [
@@ -25,7 +25,7 @@ resource "aws_security_group" "cluster" {
 resource "aws_security_group_rule" "cluster_egress_internet" {
   description       = "Allow cluster egress access to the Internet."
   protocol          = "-1"
-  security_group_id = "${aws_security_group.cluster.id}"
+  security_group_id = aws_security_group.cluster.id
   cidr_blocks       = ["0.0.0.0/0"]
   from_port         = 0
   to_port           = 0
@@ -45,10 +45,10 @@ resource "aws_security_group_rule" "cluster_https_worker_ingress" {
 }
 
 resource "aws_security_group_rule" "cluster_https_cidr_ingress" {
-  cidr_blocks       = ["${var.allow_cidr_blocks}"]
+  cidr_blocks       = [var.allow_cidr_blocks]
   description       = "Allow kubectl communication with the EKS cluster API."
   protocol          = "tcp"
-  security_group_id = "${aws_security_group.cluster.id}"
+  security_group_id = aws_security_group.cluster.id
   from_port         = 443
   to_port           = 443
   type              = "ingress"

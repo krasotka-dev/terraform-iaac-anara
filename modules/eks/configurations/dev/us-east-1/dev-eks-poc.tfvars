@@ -20,7 +20,7 @@ base_domain_zone_id = "Z32OHGRMBVZ9LR"
 vpc_id = "vpc-1471ad6e"
 
 # existing security group id mappings
-sg_ids {
+sg_ids = {
   vpc_mgmt = "sg-0baae22921460195f"
 }
 
@@ -52,7 +52,7 @@ kubernetes_version = "1.14"
 
 ### Input values for common tagging module - see the resource-tagging module in VETTM repo for more information
 
-tags {
+tags = {
   Environment        = "DEV"
   Cluster            = "DEV-EKS-POC"
 }

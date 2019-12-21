@@ -14,7 +14,7 @@ resource "null_resource" "copy-kubeconfig" {
 
 resource "null_resource" "copy-kubeconfig_destroy" {
   provisioner "local-exec" {
-    when = "destroy"
+    when = destroy
 
     command = <<EOF
       rm -rf ~/.kube/${var.environment}.${var.base_domain}

@@ -6,11 +6,11 @@ then
     return 1
 fi
 
-status_code=$(curl --write-out %{http_code} --silent --output /dev/null --max-time 10 https://artifactrepository.mcd.com)
+status_code=$(curl --write-out %{http_code} --silent --output /dev/null --max-time 10 https://github.com)
 
 if [[ "$status_code" -eq 200 ]]
     then
-        wget --quiet -O .setenv "https://artifactrepository.mcd.com/artifactory/vet-tools/scripts/setenv"
+        #wget --quiet -O .setenv "https://github.com/farrukh90/repo/setenv"
         source ./.setenv $1
     else
         echo "ERROR: Not able to access artifactory"
