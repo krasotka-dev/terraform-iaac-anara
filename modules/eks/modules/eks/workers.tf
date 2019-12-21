@@ -68,8 +68,8 @@ resource "aws_security_group_rule" "workers_egress_internet" {
 resource "aws_security_group_rule" "workers_ingress_self" {
   description              = "Allow node to communicate with each other."
   protocol                 = "-1"
-  security_group_id        = "${aws_security_group.workers.id}"
-  source_security_group_id = "${aws_security_group.workers.id}"
+  security_group_id        = "${aws_security_group.workers[count.index].id}"
+  source_security_group_id = "${aws_security_group.workers[count.index].id}"
   from_port                = 0
   to_port                  = 65535
   type                     = "ingress"
@@ -79,7 +79,7 @@ resource "aws_security_group_rule" "workers_ingress_self" {
 resource "aws_security_group_rule" "workers_ingress_cluster" {
   description              = "Allow workers Kubelets and pods to receive communication from the cluster control plane."
   protocol                 = "tcp"
-  security_group_id        = "${aws_security_group.workers.id}"
+  security_group_id        = "${aws_security_group.workers[count.index].id}"
   source_security_group_id = "${local.cluster_security_group_id}"
   from_port                = "${var.worker_sg_ingress_from_port}"
   to_port                  = 65535
@@ -91,7 +91,7 @@ resource "aws_security_group_rule" "allow_cidr_ingress" {
   cidr_blocks       = ["${var.allow_cidr_blocks}"]
   description       = "Allow ssh communication with the EKS workers."
   protocol          = "tcp"
-  security_group_id = "${aws_security_group.workers.id}"
+  security_group_id = "${aws_security_group.workers[count.index].id}"
   from_port         = 22
   to_port           = 22
   type              = "ingress"
