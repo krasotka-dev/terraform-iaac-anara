@@ -1,4 +1,4 @@
 variable "ami" {}
 variable "instance_type" {}
 
-variable "count" {}
+variable "count_instance" {}
