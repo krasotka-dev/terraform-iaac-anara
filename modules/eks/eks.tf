@@ -4,7 +4,7 @@ module "my-cluster" {
   subnets      = ["subnet-c74d1e8d", "subnet-e4820eb8", "subnet-1fe46778"]
   vpc_id       = "vpc-1471ad6e"
   cluster_version = "1.14"
-  cluster_security_group_id = "sg-054b7c5cb1ea0752b"
+  cluster_security_group_id = "sg-0baae22921460195f"
 
   worker_groups = [{
       instance_type = "m4.large"
