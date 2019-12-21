@@ -20,11 +20,7 @@ resource "aws_instance" "web" {
         ]
       }
   provisioner "local-exec" {
-    command = [
-      "echo aws_instance.web[1].public_ip >> public_ips.txt",
-      "wget -O /tmp  https://wordpress.org/latest.zip",
-      "mkdir /tmp/test",
-    ]
+    command = "echo Hello >> /tmp/file_hello"
   }
 
   lifecycle{
