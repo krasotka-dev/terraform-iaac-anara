@@ -11,6 +11,7 @@ module "my-cluster" {
       instance_type = "m4.large"
       asg_max_size  = 15
       asg_min_size  = 3
+      asg_desired_capacity = 3
       key_name      = "farrukh's_laptop"
       tags = [{
         key                 = "foo"
