@@ -38,53 +38,53 @@ resource "aws_launch_configuration" "workers" {
   }
 
   root_block_device {
-    volume_size           = "${lookup(var.worker_groups[count.index], "root_volume_size", lookup(var.workers_group_defaults, "root_volume_size"))}"
-    volume_type           = "${lookup(var.worker_groups[count.index], "root_volume_type", lookup(var.workers_group_defaults, "root_volume_type"))}"
-    iops                  = "${lookup(var.worker_groups[count.index], "root_iops", lookup(var.workers_group_defaults, "root_iops"))}"
+    volume_size           = lookup(var.worker_groups[count.index], "root_volume_size", lookup(var.workers_group_defaults, "root_volume_size"))
+    volume_type           = lookup(var.worker_groups[count.index], "root_volume_type", lookup(var.workers_group_defaults, "root_volume_type"))
+    iops                  = lookup(var.worker_groups[count.index], "root_iops", lookup(var.workers_group_defaults, "root_iops"))
     delete_on_termination = true
   }
 }
 
 resource "aws_security_group" "workers" {
-  name_prefix = "${aws_eks_cluster.this.name}"
+  name_prefix = aws_eks_cluster.this.name
   description = "Security group for all nodes in the cluster."
-  vpc_id      = "${var.vpc_id}"
-  count       = "${var.worker_security_group_id == "" ? 1 : 0}"
-  tags        = "${merge(var.tags, map("Name", "${aws_eks_cluster.this.name}-eks_worker_sg", "kubernetes.io/cluster/${aws_eks_cluster.this.name}", "owned"
-  ))}"
+  vpc_id      = var.vpc_id
+  count       = var.worker_security_group_id == "" ? 1 : 0
+  tags        = merge(var.tags, map("Name", "${aws_eks_cluster.this.name}-eks_worker_sg", "kubernetes.io/cluster/${aws_eks_cluster.this.name}", "owned"
+  ))
 }
 
 resource "aws_security_group_rule" "workers_egress_internet" {
   description       = "Allow nodes all egress to the Internet."
   protocol          = "-1"
-  security_group_id = "${aws_security_group.workers[count.index].id}"
+  security_group_id = aws_security_group.workers[count.index].id
   cidr_blocks       = ["0.0.0.0/0"]
   from_port         = 0
   to_port           = 0
   type              = "egress"
-  count             = "${var.worker_security_group_id == "" ? 1 : 0}"
+  count             = var.worker_security_group_id == "" ? 1 : 0
 }
 
 resource "aws_security_group_rule" "workers_ingress_self" {
   description              = "Allow node to communicate with each other."
   protocol                 = "-1"
-  security_group_id        = "${aws_security_group.workers[count.index].id}"
-  source_security_group_id = "${aws_security_group.workers[count.index].id}"
+  security_group_id        = aws_security_group.workers[count.index].id
+  source_security_group_id = aws_security_group.workers[count.index].id
   from_port                = 0
   to_port                  = 65535
   type                     = "ingress"
-  count                    = "${var.worker_security_group_id == "" ? 1 : 0}"
+  count                    = var.worker_security_group_id == "" ? 1 : 
 }
 
 resource "aws_security_group_rule" "workers_ingress_cluster" {
   description              = "Allow workers Kubelets and pods to receive communication from the cluster control plane."
   protocol                 = "tcp"
-  security_group_id        = "${aws_security_group.workers[count.index].id}"
-  source_security_group_id = "${local.cluster_security_group_id}"
-  from_port                = "${var.worker_sg_ingress_from_port}"
+  security_group_id        = aws_security_group.workers[count.index].id
+  source_security_group_id = local.cluster_security_group_id
+  from_port                = var.worker_sg_ingress_from_port
   to_port                  = 65535
   type                     = "ingress"
-  count                    = "${var.worker_security_group_id == "" ? 1 : 0}"
+  count                    = var.worker_security_group_id == "" ? 1 : 0
 }
 
 resource "aws_security_group_rule" "allow_cidr_ingress" {
