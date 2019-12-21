@@ -88,14 +88,14 @@ resource "aws_security_group_rule" "workers_ingress_cluster" {
 }
 
 resource "aws_security_group_rule" "allow_cidr_ingress" {
-  cidr_blocks       = ["${var.allow_cidr_blocks}"]
+  cidr_blocks       = [var.allow_cidr_blocks]
   description       = "Allow ssh communication with the EKS workers."
   protocol          = "tcp"
-  security_group_id = "${aws_security_group.workers[count.index].id}"
+  security_group_id = aws_security_group.workers[count.index].id
   from_port         = 22
   to_port           = 22
   type              = "ingress"
-  count             = "${var.cluster_security_group_id == "" ? 1 : 0}"
+  count             = var.cluster_security_group_id == "" ? 1 : 0
 }
 
 resource "aws_security_group_rule" "allow_mgmt_ingress" {
