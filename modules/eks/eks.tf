@@ -1,7 +1,7 @@
 data "aws_availability_zones" "available" {}
 
 locals {
-  cluster_name = "${var.environment}"
+  cluster_name = var.environment
   worker_groups = "${list(
                   map("instance_type","${var.worker_instance_type}",
                       "asg_desired_capacity", "${var.worker_asg_min_size}",
@@ -14,7 +14,7 @@ locals {
                       "ami_id", "${var.ami_id}"
                       ),
   )}"
-  tags = "${var.tags}"
+  tags = var.tags
 }
 
 resource "random_string" "suffix" {
@@ -24,7 +24,7 @@ resource "random_string" "suffix" {
 
 module "eks" {
   source                                       = "./modules/eks"
-  cluster_name                                 = "${local.cluster_name}"
+  cluster_name                                 = local.cluster_name
   cluster_version                              = "${var.kubernetes_version}"
   subnets                                      = ["${var.worker_subnet_ids}"]
   tags                                         = "${local.tags}"
