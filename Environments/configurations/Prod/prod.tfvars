@@ -6,6 +6,7 @@ s3_folder_type = "state"                   #Will be used to set backend.tf
 s3_tfstate_file = "infrastructure.tfstate" #Will be used to set backend.tf
 
 
-ami                                         = ""
-instance_type                               = ""
-key_name                                    =  ""
+
+ami                                         = "ami-00068cd7555f543d5"
+instance_type                               = "m5.large"
+key_name                                    = "farrukh's_laptop"
