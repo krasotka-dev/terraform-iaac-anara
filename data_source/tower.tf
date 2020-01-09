@@ -39,9 +39,9 @@ resource "aws_instance" "web" {
   key_name = aws_key_pair.towerkey.key_name
   provisioner "remote-exec" {
       connection {
-          host        = self.public_ip
-          type        = "ssh"
-          user        = "centos"
+          host = self.public_ip
+          type = "ssh"
+          user = "centos"
           private_key = file("~/.ssh/id_rsa")
           }
         inline = [
