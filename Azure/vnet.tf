@@ -25,7 +25,7 @@ resource "azurerm_network_interface" "nic1" {
   resource_group_name = "${azurerm_resource_group.web_server_rg.name}"
   ip_configuration {
     name = "testconfiguration1"
-    subnet_id = "${azurerm_subnet.internal.id}"
+    subnet_id = "${azurerm_subnet.private.id}"
     private_ip_address_allocation = "Dynamic"
   }
 }
