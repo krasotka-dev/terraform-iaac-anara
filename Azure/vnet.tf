@@ -145,7 +145,7 @@ resource "azurerm_virtual_machine" "vm2" {
         disable_password_authentication = true
         ssh_keys {
             path     = "/home/centos/.ssh/authorized_keys"
-            key_data = "${file("~/.ssh/id_rsa.pub")}"
+            key_data = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC2oBmpO16ZsjyvLizDqgxX9CqSPBSg31mcTK+lluWsmIoaW/MJ/6S8pQFXSEpipHDgwplPvijFzodROhxa8JwSGWfQlmNhGHDDHTN8bPsoLmw6nk1fmoq61fbQ75OMWIbbiZVtvfI6cT2p+N5mOKf94Kr0adEKEyqLYrj7Sc8eUnJDQ+r0kgjrNqKL1cHjIw+r/CmwxeBx/rM5ix/zoJ9o7S4r//wSWrpr/FXQ9bHLAAwxwtuichjDTeCOl6FK8Ak008oSankrSGLP9os90eMfqZYrSr4RKBjDSG3a+KG/6UDDORmrMiOLa0hjYGbuhu3auVTUmcNv21gb1h0H3QLd root@ip-172-31-45-232.eu-west-1.compute.internal"
         }
     }
   tags  {
