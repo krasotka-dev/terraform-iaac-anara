@@ -127,7 +127,7 @@ resource "azurerm_network_interface" "nic2" {
     name = "testconfiguration2"
     subnet_id = "${azurerm_subnet.private.id}"
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id = "${azurerm_public_ip.IP.id}"
+    public_ip_address_id = "${azurerm_public_ip.IP2.id}"
   }
 }
 resource "azurerm_public_ip" "IP2" {
@@ -141,7 +141,7 @@ resource "azurerm_virtual_machine" "vm2" {
   name = "vm2"
   location = "westus2"
   resource_group_name = "${azurerm_resource_group.web_server_rg.name}"
-  network_interface_ids = ["${azurerm_network_interface.nic1.id}"]
+  network_interface_ids = ["${azurerm_network_interface.nic2.id}"]
   vm_size = "Standard_DS1_v2"
   storage_image_reference {
     publisher = "OpenLogic"
@@ -156,7 +156,7 @@ resource "azurerm_virtual_machine" "vm2" {
    managed_disk_type = "Standard_LRS"
   }
   os_profile {
-    computer_name = "vm1"
+    computer_name = "vm2"
     admin_username = "centos"
   }
   os_profile_linux_config {
