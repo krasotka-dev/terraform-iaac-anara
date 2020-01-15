@@ -35,5 +35,5 @@ resource "azurerm_public_ip" "IP" {
     name = "public_ip"
     location = "westus2"
     resource_group_name = "${azurerm_resource_group.web_server_rg.name}"
-    public_ip_address_allocation = "Dynamic"
+    allocation_method = "Dynamic"
 }
