@@ -39,8 +39,8 @@ resource "azurerm_public_ip" "IP" {
 }
 
 
-resource "azurerm_network_security_group" "example" {
-  name                = "acceptanceTestSecurityGroup1"
+resource "azurerm_network_security_group" "sec_group1" {
+  name                = "sec_group1"
   location            = "${azurerm_resource_group.web_server_rg.location}"
   resource_group_name = "${azurerm_resource_group.web_server_rg.name}"
 
